@@ -3,14 +3,13 @@ import json
 from pathlib import Path
 from typing import List
 from tqdm import tqdm
-import library.train_util as train_util
 import os
 
 def main(args):
   assert not args.recursive or (args.recursive and args.full_path), "recursive requires full_path / recursiveはfull_pathと同時に指定してください"
 
   train_data_dir_path = Path(args.train_data_dir)
-  image_paths: List[Path] = train_util.glob_images_pathlib(train_data_dir_path, args.recursive)
+  image_paths: List[Path] = glob_images_pathlib(train_data_dir_path, args.recursive)
   print(f"found {len(image_paths)} images.")
 
   if args.in_json is None and Path(args.out_json).is_file():
@@ -46,6 +45,17 @@ def main(args):
 
   print("done!")
 
+def glob_images_pathlib(dir_path, recursive):
+    image_paths = []
+    if recursive:
+        for ext in IMAGE_EXTENSIONS:
+            image_paths += list(dir_path.rglob("*" + ext))
+    else:
+        for ext in IMAGE_EXTENSIONS:
+            image_paths += list(dir_path.glob("*" + ext))
+    image_paths = list(set(image_paths)) # Remove dupe
+    image_paths.sort()
+    return image_paths
 
 def setup_parser() -> argparse.ArgumentParser:
   parser = argparse.ArgumentParser()
