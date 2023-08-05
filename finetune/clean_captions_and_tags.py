@@ -6,6 +6,7 @@ import glob
 import os
 import json
 import re
+import html
 
 from tqdm import tqdm
 
@@ -25,8 +26,8 @@ PATTERNS_REMOVE_IN_MULTI = [
         r', (ponytail|braid|ahoge|twintails|[\w\-]+ bun|single hair bun|single side bun|two side up|two tails|[\w\-]+ braid|sidelocks), '),
 ]
 
-
 def clean_tags(image_key, tags):
+  tags = html.unescape(tags)
   # replace '_' to ' '
   tags = tags.replace('^_^', '^@@@^')
   tags = tags.replace('_', ' ')
@@ -78,7 +79,6 @@ def clean_tags(image_key, tags):
   tags = tags[2:-2]
   return tags
 
-
 # 上から順に検索、置換される
 # ('置換元文字列', '置換後文字列')
 CAPTION_REPLACEMENTS = [
@@ -111,8 +111,8 @@ CAPTION_REPLACEMENTS = [
     ('girl girl', 'girl'),
 ]
 
-
 def clean_caption(caption):
+  caption = html.unescape(caption)
   for rf, rt in CAPTION_REPLACEMENTS:
     replaced = True
     while replaced:
@@ -120,7 +120,6 @@ def clean_caption(caption):
       caption = caption.replace(rf, rt)
       replaced = bef != caption
   return caption
-
 
 def main(args):
   if os.path.exists(args.in_json):
@@ -162,7 +161,6 @@ def main(args):
     json.dump(metadata, f, indent=2)
   print("done!")
 
-
 def setup_parser() -> argparse.ArgumentParser:
   parser = argparse.ArgumentParser()
   # parser.add_argument("train_data_dir", type=str, help="directory for train images / 学習画像データのディレクトリ")
@@ -171,7 +169,6 @@ def setup_parser() -> argparse.ArgumentParser:
   parser.add_argument("--debug", action="store_true", help="debug mode")
 
   return parser
-
 
 if __name__ == '__main__':
   parser = setup_parser()
