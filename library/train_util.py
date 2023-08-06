@@ -934,6 +934,7 @@ class BaseDataset(torch.utils.data.Dataset):
             )
 
     def get_image_size(self, image_path):
+        Image.MAX_IMAGE_PIXELS = 694206942
         image = Image.open(image_path)
         return image.size
 
