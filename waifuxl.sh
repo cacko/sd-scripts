@@ -5,8 +5,8 @@ accelerate launch --num_cpu_threads_per_process 26 sdxl_train.py \
     --dataset_config=/home/ubuntu/geldump/sdxl_train.toml \
     --save_model_as=safetensors \
     --gradient_accumulation_steps 8 \
-    --learning_rate=5e-6 \
-    --max_train_epochs 4 \
+    --learning_rate=1e-5 \
+    --max_train_epochs 1 \
     --use_8bit_adam \
     --diffusers_xformers \
     --gradient_checkpointing \
