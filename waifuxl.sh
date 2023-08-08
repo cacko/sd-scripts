@@ -1,17 +1,19 @@
 accelerate launch --num_cpu_threads_per_process 26 sdxl_train.py \
-    --pretrained_model_name_or_path=/home/ubuntu/sdxltrainout/sd_xl_base_1.0.safetensors \
+    --pretrained_model_name_or_path=/home/ubuntu/sdxltrainout/waifuxl_e1.safetensors \
     --output_dir=/home/ubuntu/sdxltrainout  \
     --output_name=waifuxl \
     --dataset_config=/home/ubuntu/geldump/sdxl_train.toml \
     --save_model_as=safetensors \
-    --gradient_accumulation_steps 8 \
+    --gradient_accumulation_steps 16 \
     --learning_rate=5e-6 \
-    --max_train_epochs 1 \
+    --max_train_epochs 5 \
     --use_8bit_adam \
     --diffusers_xformers \
     --xformers \
     --gradient_checkpointing \
     --mixed_precision=bf16 \
     --no_half_vae \
-    --train_text_encoder \
-    --save_precision fp16
+    --save_precision fp16 \
+    --max_data_loader_n_workers 26 \
+    --persistent_data_loader_workers \
+    --train_text_encoder
