@@ -13,4 +13,5 @@ accelerate launch --num_cpu_threads_per_process 26 sdxl_train.py \
     --gradient_checkpointing \
     --mixed_precision=bf16 \
     --no_half_vae \
-    --train_text_encoder
+    --train_text_encoder \
+    --save_precision fp16
