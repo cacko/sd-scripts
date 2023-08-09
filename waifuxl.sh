@@ -16,4 +16,6 @@ accelerate launch --num_cpu_threads_per_process 26 sdxl_train.py \
     --save_precision fp16 \
     --max_data_loader_n_workers 26 \
     --persistent_data_loader_workers \
-    --train_text_encoder
+    --train_text_encoder \
+    --logging_dir /home/ubuntu/tb \
+    --log_with tensorboard
