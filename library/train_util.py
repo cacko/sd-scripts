@@ -2522,7 +2522,7 @@ def get_sai_model_spec(
     sdxl: bool,
     lora: bool,
     textual_inversion: bool,
-    is_stable_diffusion_ckpt: Optional[bool] = None, # None for TI and LoRA
+    is_stable_diffusion_ckpt: Optional[bool] = None,  # None for TI and LoRA
 ):
     timestamp = time.time()
 
@@ -2547,15 +2547,15 @@ def get_sai_model_spec(
         lora,
         textual_inversion,
         timestamp,
-        title,
-        reso,
-        is_stable_diffusion_ckpt,
-        args.metadata_author,
-        args.metadata_description,
-        args.metadata_license,
-        args.metadata_tags,
-        timesteps,
-        args.clip_skip,  # None or int
+        title=title,
+        reso=reso,
+        is_stable_diffusion_ckpt=is_stable_diffusion_ckpt,
+        author=args.metadata_author,
+        description=args.metadata_description,
+        license=args.metadata_license,
+        tags=args.metadata_tags,
+        timesteps=timesteps,
+        clip_skip=args.clip_skip,  # None or int
     )
     return metadata
 
@@ -3887,7 +3887,16 @@ def pool_workaround(
 
     # input_ids: b*n,77
     # find index for EOS token
-    eos_token_index = torch.where(input_ids == eos_token_id)[1]
+
+    # Following code is not working if one of the input_ids has multiple EOS tokens (very odd case)
+    # eos_token_index = torch.where(input_ids == eos_token_id)[1]
+    # eos_token_index = eos_token_index.to(device=last_hidden_state.device)
+
+    # Create a mask where the EOS tokens are
+    eos_token_mask = (input_ids == eos_token_id).int()
+
+    # Use argmax to find the last index of the EOS token for each element in the batch
+    eos_token_index = torch.argmax(eos_token_mask, dim=1)  # this will be 0 if there is no EOS token, it's fine
     eos_token_index = eos_token_index.to(device=last_hidden_state.device)
 
     # get hidden states for EOS token
