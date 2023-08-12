@@ -1,11 +1,11 @@
 accelerate launch --num_cpu_threads_per_process 26 sdxl_train.py \
     --pretrained_model_name_or_path /home/ubuntu/sdxltrainout/sd_xl_base_1.0.safetensors \
     --output_dir /home/ubuntu/sdxltrainout \
-    --output_name waifuxl \
+    --output_name v2xl \
     --dataset_config /home/ubuntu/geldump/sdxl_train.toml \
     --save_model_as safetensors \
     --gradient_accumulation_steps 16 \
-    --learning_rate 1e-7 \
+    --learning_rate 4e-7 \
     --max_train_epochs 8 \
     --use_8bit_adam \
     --diffusers_xformers \
