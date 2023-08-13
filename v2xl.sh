@@ -7,9 +7,9 @@ accelerate launch --num_cpu_threads_per_process 26 sdxl_train.py \
     --gradient_accumulation_steps 16 \
     --learning_rate 4e-7 \
     --max_train_epochs 8 \
-    --use_8bit_adam \
-    --lr_scheduler linear \
-    --lr_warmup_steps 50 \
+    --optimizer_type adafactor \
+    --lr_scheduler adafactor \
+    --lr_warmup_steps 10 \
     --diffusers_xformers \
     --xformers \
     --gradient_checkpointing \
