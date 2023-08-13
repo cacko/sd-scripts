@@ -173,10 +173,12 @@ class BucketManager:
 
     def make_buckets(self):
         # resos = model_util.make_bucket_resolutions(self.max_reso, self.min_size, self.max_size, self.reso_steps)
-        resos = list()
-        resos.append((self.min_size, self.max_size))
-        resos.append((self.max_reso[0], self.max_reso[1]))
-        resos.append((self.max_size, self.min_size))
+        resos = set()
+        resos.add((self.min_size, self.max_size))
+        resos.add((self.max_reso[0], self.max_reso[1]))
+        resos.add((self.max_size, self.min_size))
+        resos = list(resos)
+        resos.sort()
         self.set_predefined_resos(resos)
 
     def set_predefined_resos(self, resos):
