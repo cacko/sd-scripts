@@ -8,7 +8,7 @@ accelerate launch --num_cpu_threads_per_process 26 sdxl_train.py \
     --learning_rate 4e-7 \
     --max_train_epochs 8 \
     --use_8bit_adam \
-    --lr_scheduler cosine \
+    --lr_scheduler linear \
     --lr_warmup_steps 50 \
     --diffusers_xformers \
     --xformers \
