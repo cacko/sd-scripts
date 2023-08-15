@@ -1,0 +1,21 @@
+# https://taskfile.dev
+
+version: '3'
+
+vars:
+  PROJECT: sd-scripts
+
+tasks:
+  push:
+    desc: commit and pushes current changes
+    cmds:
+      - git add .  || true
+      - git commit -am "$(curl -s https://commit.cacko.net/index.txt)" || true
+      - git push || true
+
+  export:
+    desc: export env
+    dir: $DEMONDIR
+    cmds:
+      - mamba env export --no-builds  -n {{.PROJECT}} > environment.yml
+
