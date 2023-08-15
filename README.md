@@ -209,16 +209,16 @@ note: Some user reports ``ValueError: fp16 mixed precision requires a GPU`` is o
 
 In this case, you need to install PyTorch 2.0 and xformers 0.0.20. Instead of the above, please type the following:
 
-```powershell
-git clone https://github.com/kohya-ss/sd-scripts.git
-cd sd-scripts
+```sh
+git clone https://github.com/LagPixelLOL/sd-scripts.git sds
+cd sds
 
-python -m venv venv
-.\venv\Scripts\activate
+python3 -m venv venv
+source venv/bin/activate
 
-pip install torch==2.0.1+cu118 torchvision==0.15.2+cu118 --index-url https://download.pytorch.org/whl/cu118
-pip install --upgrade -r requirements.txt
-pip install xformers==0.0.20
+pip3 install torch==2.0.1+cu118 torchvision==0.15.2+cu118 --index-url https://download.pytorch.org/whl/cu118
+pip3 install --upgrade -r requirements.txt
+pip3 install https://huggingface.co/v2ray/xformers-wheels/resolve/main/xformers-torch2.0.1%2Bcu118h100-0.0.21%2Bb206d71.d20230803-cp310-cp310-manylinux2014_x86_64.whl
 
 accelerate config
 ```

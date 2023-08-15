@@ -172,7 +172,13 @@ class BucketManager:
         self.reso_to_id = sorted_reso_to_id
 
     def make_buckets(self):
-        resos = model_util.make_bucket_resolutions(self.max_reso, self.min_size, self.max_size, self.reso_steps)
+        # resos = model_util.make_bucket_resolutions(self.max_reso, self.min_size, self.max_size, self.reso_steps)
+        resos = set()
+        resos.add((self.min_size, self.max_size))
+        resos.add((self.max_reso[0], self.max_reso[1]))
+        resos.add((self.max_size, self.min_size))
+        resos = list(resos)
+        resos.sort()
         self.set_predefined_resos(resos)
 
     def set_predefined_resos(self, resos):
@@ -939,6 +945,7 @@ class BaseDataset(torch.utils.data.Dataset):
             )
 
     def get_image_size(self, image_path):
+        Image.MAX_IMAGE_PIXELS = 694206942
         image = Image.open(image_path)
         return image.size
 
