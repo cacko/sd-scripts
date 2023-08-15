@@ -17,5 +17,5 @@ tasks:
     desc: export env
     dir: $DEMONDIR
     cmds:
-      - mamba env export --no-builds  -n {{.PROJECT}} > environment.yml
+      - conda env export --no-builds  -n {{.PROJECT}} > environment.yml
 
